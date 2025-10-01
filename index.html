@@ -26,6 +26,43 @@
     <body>
         <div id="map">
         </div>
+		<!-- === START: Sidebar (paste this BEFORE your map div) === -->
+<div id="sidebar" style="width:260px; position:fixed; left:0; top:0; bottom:0; padding:12px; background:#f7f7f7; overflow:auto; box-shadow:2px 0 6px rgba(0,0,0,0.08); z-index:1000;">
+  <h3 style="margin:6px 0 12px 0; font-size:18px;">Map Controls</h3>
+
+  <label for="layerSelect" style="font-weight:600; font-size:13px;">Select layer</label><br>
+  <select id="layerSelect" style="width:100%; padding:6px; margin-top:6px;">
+    <option value="buildings">Buildings</option>
+    <option value="vegetation">Vegetation</option>
+    <option value="waterways">Waterways</option>
+    <option value="roads">Roads</option>
+    <option value="openspaces">Open Spaces</option>
+    <option value="plot">Plot</option>
+    <option value="contour">Contour</option>
+  </select>
+
+  <div style="height:12px;"></div>
+
+  <label for="attributeSelect" style="font-weight:600; font-size:13px;">Select attribute (buildings)</label><br>
+  <select id="attributeSelect" style="width:100%; padding:6px; margin-top:6px;">
+    <option value="bldg_use">bldg_use</option>
+    <option value="wall_ml">wall_ml</option>
+    <option value="bldg ht">bldg ht</option>
+    <option value="floor">floor</option>
+    <option value="roof_ml">roof_ml</option>
+    <option value="bldg_area">bldg_area</option>
+  </select>
+
+  <div style="height:14px;"></div>
+  <button id="resetStyleBtn" style="width:100%; padding:8px;">Reset styling</button>
+</div>
+<!-- === END: Sidebar === -->
+
+<!-- Adjust the map container so it doesn't sit under the sidebar -->
+<style>
+  /* If your map div id is "map" this will move it; if it's different, edit selector accordingly */
+  #map { margin-left: 280px; width: calc(100% - 280px); height: 100vh; }
+</style>
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
         <script src="js/L.Control.Layers.Tree.min.js"></script>
