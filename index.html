@@ -241,6 +241,33 @@
                 interactive: true,
             }
         }
+		// Utility: assign consistent colors to attribute values
+function getCategoryColor(value) {
+    const colors = [
+        '#1f78b4', '#33a02c', '#e31a1c',
+        '#ff7f00', '#6a3d9a', '#b15928',
+        '#a6cee3', '#b2df8a', '#fb9a99'
+    ];
+    let hash = 0;
+    for (let i = 0; i < value.length; i++) {
+        hash = value.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return colors[Math.abs(hash) % colors.length];
+}
+function getBuildingStyle(attribute) {
+    return function(feature) {
+        let val = feature.properties[attribute];
+        return {
+            pane: 'pane_6Buildingsbuildings_2',
+            opacity: 1,
+            color: 'white',
+            weight: 1,
+            fillOpacity: 0.8,
+            fillColor: val ? getCategoryColor(val.toString()) : '#cccccc',
+            interactive: true
+        };
+    };
+}
         map.createPane('pane_6Buildingsbuildings_2');
         map.getPane('pane_6Buildingsbuildings_2').style.zIndex = 402;
         map.getPane('pane_6Buildingsbuildings_2').style['mix-blend-mode'] = 'normal';
@@ -255,6 +282,20 @@
         });
         bounds_group.addLayer(layer_6Buildingsbuildings_2);
         map.addLayer(layer_6Buildingsbuildings_2);
+// Default style reference
+let currentStyle = style_6Buildingsbuildings_2_0;
+
+// Attribute selection event
+document.getElementById("attributeSelect").addEventListener("change", function(e) {
+    let selectedAttr = e.target.value;
+    currentStyle = getBuildingStyle(selectedAttr);
+    layer_6Buildingsbuildings_2.setStyle(currentStyle);
+});
+
+// Reset button
+document.getElementById("resetStyleBtn").addEventListener("click", function() {
+    layer_6Buildingsbuildings_2.setStyle(style_6Buildingsbuildings_2_0);
+});
         function pop_5Openopenspaces_3(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
