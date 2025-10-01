@@ -296,6 +296,39 @@ document.getElementById("attributeSelect").addEventListener("change", function(e
 document.getElementById("resetStyleBtn").addEventListener("click", function() {
     layer_6Buildingsbuildings_2.setStyle(style_6Buildingsbuildings_2_0);
 });
+<div style="height:14px;"></div>
+<label for="findInput" style="font-weight:600; font-size:13px;">Find by value</label><br>
+<input id="findInput" type="text" placeholder="Enter value" style="width:100%; padding:6px; margin-top:6px;">
+<button id="findBtn" style="width:100%; padding:8px; margin-top:6px;">Find & Zoom</button>
+// Find & Zoom functionality
+document.getElementById("findBtn").addEventListener("click", function() {
+    let attr = document.getElementById("attributeSelect").value; // selected attribute
+    let value = document.getElementById("findInput").value.trim().toLowerCase();
+
+    if (!attr || !value) {
+        alert("Select an attribute and enter a value!");
+        return;
+    }
+
+    let found = false;
+    layer_6Buildingsbuildings_2.eachLayer(function(layer) {
+        let prop = layer.feature.properties[attr];
+        if (prop && prop.toString().toLowerCase() === value) {
+            map.fitBounds(layer.getBounds()); // zoom to feature
+            layer.setStyle({
+                color: "yellow",
+                weight: 3,
+                fillColor: "red",
+                fillOpacity: 0.9
+            });
+            found = true;
+        }
+    });
+
+    if (!found) {
+        alert("No feature found with " + attr + " = " + value);
+    }
+});
         function pop_5Openopenspaces_3(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
